@@ -16,3 +16,11 @@ Base.metadata.create_all(bind=engine)
 @app.get("/")
 def home():
     return FileResponse(os.path.join("static", "index.html"))
+
+
+
+
+
+
+
+__version__ = "0.2.0"
