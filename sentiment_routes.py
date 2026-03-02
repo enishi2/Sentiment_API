@@ -35,7 +35,7 @@ def analyze_comments(data: CommentsInput, db: Session = Depends(get_db)):
     negative = 0
 
     for comment, result in zip(data.comments, results):
-        label = result['label']
+        label = result['label'].upper()
         score = result['score']
 
         
