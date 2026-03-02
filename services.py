@@ -1,4 +1,10 @@
 from transformers import pipeline
+import os
+
+
+
+HF_TOKEN = os.getenv("HF_TOKEN")
+
 
 #carrega modelo PT-BR de analise de sentimento
 #model_pt = pipeline(
@@ -10,7 +16,7 @@ from transformers import pipeline
 #model_multi = pipeline("sentiment-analysis", model="cardiffnlp/twitter-xlm-roberta-base-sentiment")
 
 # substitua por um modelo leve DistilBERT
-model_sst2 = pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
+model_sst2 = pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english", token=HF_TOKEN)
 
 
 def analyze_sentiment(texts: list[str]):
