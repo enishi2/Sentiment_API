@@ -7,7 +7,7 @@ from transformers import pipeline
 #)
 
 #Carrega modelo multilinguas de analise de sentimento
-model_multi = pipeline("sentiment-analysis", model="nlptown/bert-base-multilingual-uncased-sentiment")
+model_multi = pipeline("sentiment-analysis", model="cardiffnlp/twitter-xlm-roberta-base-sentiment")
 
 
 def analyze_sentiment(texts: list[str]):
