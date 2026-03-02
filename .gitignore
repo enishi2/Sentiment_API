@@ -1,0 +1,20 @@
+# Pasta do ambiente virtual
+venv/
+
+# Arquivos compilados do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Banco de dados local
+*.db
+
+# Variáveis de ambiente
+.env
+
+# Logs
+*.log
+
+# Arquivo de testes
+test_model.py
