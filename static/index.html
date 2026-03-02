@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sentiment Analyzer</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        textarea { width: 100%; height: 150px; }
+        button { padding: 10px 20px; margin-top: 10px; }
+        .results { margin-top: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Sentiment Analyzer</h1>
+    <p>Paste your comments below (one per line) and click "Analyze".</p>
+    <textarea id="commentsInput" placeholder="Enter your comments here..."></textarea>
+    <br>
+    <button onclick="analyzeComments()">Analyze</button>
+
+    <div class="results" id="results"></div>
+
+    <script>
+        async function analyzeComments() {
+            const commentsText = document.getElementById("commentsInput").value;
+            const comments = commentsText.split("\n").filter(c => c.trim() !== "");
+
+            if (comments.length === 0) {
+                alert("Please enter at least one comment.");
+                return;
+            }
+
+            const response = await fetch("/sentiment/analyze-batch", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ comments })
+            });
+
+            const data = await response.json();
+            displayResults(data);
+        }
+
+        function displayResults(data) {
+            let html = "<h2>Summary</h2>";
+            html += `<p>Total Comments: ${data.Summary.total_comments}</p>`;
+            html += `<p>Positive: ${data.Summary.positive} (${data.Summary.positive_percentage}%)</p>`;
+            html += `<p>Neutral: ${data.Summary.neutral}</p>`;
+            html += `<p>Negative: ${data.Summary.negative} (${data.Summary.negative_percentage}%)</p>`;
+
+            html += "<h2>Details</h2>";
+            html += "<table><tr><th>Comment</th><th>Sentiment</th><th>Confidence</th></tr>";
+            data.details.forEach(d => {
+                html += `<tr><td>${d.comment}</td><td>${d.sentiment}</td><td>${d.confidence.toFixed(2)}</td></tr>`;
+            });
+            html += "</table>";
+
+            document.getElementById("results").innerHTML = html;
+        }
+    </script>
+</body>
+</html>

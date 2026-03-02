@@ -14,10 +14,6 @@ router = APIRouter(prefix="/sentiment", tags=["sentiment"])
 
 
 
-@router.get("/")
-def home():
-    return {"message": "Bem-vindo à API de Análise de Sentimentos!"}
-
 
 # Dependency profissional para DB
 def get_db():
