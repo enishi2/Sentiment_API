@@ -38,20 +38,35 @@ def analyze_comments(data: CommentsInput, db: Session = Depends(get_db)):
         label = result['label']
         score = result['score']
 
-        stars = int(label.split()[0])  # pega o número da estrela
-
-        if stars <= 2:
+        
+          # Define sentimento
+        if label == "NEGATIVE":
             sentiment = "NEGATIVE"
             negative += 1
-        elif stars == 3:
-            sentiment = "NEUTRAL"
-            neutral += 1
-        else:
+        elif label == "POSITIVE":
             sentiment = "POSITIVE"
             positive += 1
+        else:
+            sentiment = "NEUTRAL"
+            neutral += 1
+        
+        
+        #stars = int(label.split()[0])  # pega o número da estrela
 
-        #savla no banco de dados
+        #if stars <= 2:
+        #    sentiment = "NEGATIVE"
+        #   negative += 1
+        #elif stars == 3:
+        #    sentiment = "NEUTRAL"
+        #    neutral += 1
+        #else:
+        #    sentiment = "POSITIVE"
+        #    positive += 1
 
+        
+        
+        
+        #salva no banco de dados
         new_analysis = CommentAnalysis(
             comment=comment,
             sentiment=sentiment,
